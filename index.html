@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#fff1f2; --bg2:#fde4ec; --ink:#4a2c3a; --soft:#8a6475;
+    --rose:#e0577d; --rose-d:#c43e65; --paper:#fffaf5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Nunito',sans-serif;color:var(--ink);
+    background:radial-gradient(ellipse at top,var(--bg2),var(--bg1) 60%);
+    min-height:100vh;overflow-x:hidden;
+  }
+  #hearts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .fh{position:absolute;bottom:-40px;opacity:.55;animation:rise linear forwards}
+  @keyframes rise{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+
+  .screen{position:relative;z-index:1;min-height:100vh;display:none;
+    flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;text-align:center}
+  .screen.on{display:flex;animation:fade .8s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(30px,7vw,46px);line-height:1.15;margin-bottom:12px}
+  .hand{font-family:'Caveat',cursive;font-size:clamp(24px,5.5vw,30px);color:var(--rose-d)}
+  p.sub{color:var(--soft);font-size:17px;max-width:420px;margin:0 auto 28px;line-height:1.55}
+
+  button{font-family:'Nunito',sans-serif;font-weight:600;font-size:17px;border:none;cursor:pointer;
+    border-radius:999px;padding:14px 28px;transition:transform .15s, box-shadow .15s, background .2s}
+  button:active{transform:scale(.96)}
+  .primary{background:var(--rose);color:#fff;box-shadow:0 8px 22px rgba(224,87,125,.35)}
+  .primary:hover{background:var(--rose-d)}
+  .ghost{background:#fff;color:var(--rose-d);box-shadow:0 4px 14px rgba(74,44,58,.08)}
+
+  /* envelope */
+  .env{width:230px;height:150px;position:relative;margin:10px auto 34px;cursor:pointer;
+    animation:bob 2.6s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-8px)}}
+  .env .body{position:absolute;inset:0;background:#f7c6d4;border-radius:10px;box-shadow:0 14px 30px rgba(196,62,101,.22)}
+  .env .flap{position:absolute;left:0;right:0;top:0;height:0;
+    border-left:115px solid transparent;border-right:115px solid transparent;border-top:85px solid #f1a9bf;
+    transform-origin:top;transition:transform .6s}
+  .env .seal{position:absolute;left:50%;top:62px;transform:translate(-50%,-50%);font-size:34px;z-index:2}
+  .env.open .flap{transform:rotateX(180deg)}
+
+  /* letter */
+  .letter{background:var(--paper);max-width:560px;width:100%;text-align:left;border-radius:16px;
+    padding:36px 30px 32px;box-shadow:0 20px 50px rgba(74,44,58,.12);position:relative;
+    background-image:repeating-linear-gradient(transparent 0 33px,#f3e3e8 33px 34px)}
+  .letter .to{font-family:'Caveat',cursive;font-size:32px;color:var(--rose-d);margin-bottom:10px}
+  .letter p{font-size:17.5px;line-height:34px;margin-bottom:0}
+  .letter p + p{margin-top:34px}
+  .letter .from{font-family:'Caveat',cursive;font-size:28px;text-align:right;margin-top:24px;color:var(--rose-d)}
+  .next{margin-top:30px}
+
+  /* promises */
+  .cards{display:grid;gap:14px;max-width:520px;width:100%;margin:6px auto 30px}
+  .card{background:#fff;border-radius:16px;padding:18px 20px;text-align:left;display:flex;gap:14px;align-items:flex-start;
+    box-shadow:0 6px 18px rgba(74,44,58,.07);opacity:0;transform:translateY(10px);transition:.5s}
+  .card.show{opacity:1;transform:none}
+  .card .ic{font-size:26px;line-height:1}
+  .card b{display:block;font-size:17px;margin-bottom:3px}
+  .card span{color:var(--soft);font-size:15.5px;line-height:1.5}
+
+  .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .big-heart{font-size:84px;animation:beat 1.2s ease-in-out infinite;margin-bottom:10px}
+  @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+  .wa{display:inline-block;margin-top:26px;background:#25D366;color:#fff;text-decoration:none;font-weight:600;
+    font-size:17px;padding:14px 26px;border-radius:999px;box-shadow:0 8px 22px rgba(37,211,102,.3)}
+  .dots{display:flex;gap:8px;justify-content:center;margin-top:26px}
+  .dots i{width:8px;height:8px;border-radius:50%;background:#f1b6c7}
+  .dots i.a{background:var(--rose)}
+</style>
+</head>
+<body>
+<div id="hearts"></div>
+
+<!-- 1. Intro -->
+<section class="screen on" id="s1">
+  <div class="hand">hey <span class="nm">you</span>…</div>
+  <h1>I made something<br>for you</h1>
+  <p class="sub">I know you're upset with me, and you have every right to be. Can you give me two minutes?</p>
+  <div class="env" id="env" onclick="openEnv()">
+    <div class="body"></div><div class="flap"></div><div class="seal">💌</div>
+  </div>
+  <button class="primary" onclick="openEnv()">Open it</button>
+</section>
+
+<!-- 2. Letter -->
+<section class="screen" id="s2">
+  <div class="letter">
+    <div class="to">Dear <span class="nm">you</span>,</div>
+    <p>You trusted me with something and asked me to keep it between us. I didn't. I told someone, and I'm truly sorry.</p>
+    <p>It slipped out and I didn't mean for it to, but that doesn't make it okay. You weren't upset over nothing. You trusted me and I let you down, and I get why it hurts.</p>
+    <p>I hate that I made you feel like you can't tell me things. Being the person you can tell anything to matters a lot to me, and I want to earn that back.</p>
+    <div class="from">— yours, and very sorry</div>
+  </div>
+  <button class="primary next" onclick="go(3)">What I'm going to do →</button>
+</section>
+
+<!-- 3. Promises -->
+<section class="screen" id="s3">
+  <h1>My promises</h1>
+  <p class="sub">Saying sorry is the easy part. Here's what I'll actually do.</p>
+  <div class="cards">
+    <div class="card"><div class="ic">🔒</div><div><b>Your secrets stay with me</b><span>If you tell me something is private, it stays private. No exceptions, not even "by mistake."</span></div></div>
+    <div class="card"><div class="ic">🗣️</div><div><b>I'll try to fix it</b><span>I'll talk to the person I told and ask them to keep it to themselves, if you're okay with that.</span></div></div>
+    <div class="card"><div class="ic">👂</div><div><b>I'll listen</b><span>If you want to tell me how this made you feel, I'll listen without getting defensive.</span></div></div>
+    <div class="card"><div class="ic">⏳</div><div><b>I'll be patient</b><span>Trust takes time to rebuild. I'm not going to rush you.</span></div></div>
+  </div>
+  <button class="primary" onclick="go(4)">One last thing →</button>
+</section>
+
+<!-- 4. Ask -->
+<section class="screen" id="s4">
+  <div class="big-heart">🤍</div>
+  <h1>Will you forgive me?</h1>
+  <p class="sub">No pressure. Whatever you feel right now is okay.</p>
+  <div class="row">
+    <button class="primary" onclick="answer(true)">I forgive you 🤍</button>
+    <button class="ghost" onclick="answer(false)">I need a little time</button>
+  </div>
+</section>
+
+<!-- 5a. Yes -->
+<section class="screen" id="s5">
+  <div class="big-heart">💖</div>
+  <h1>Thank you</h1>
+  <p class="sub">I don't take this for granted. I'll show you, not just tell you. Can I give you a hug now? 🫂</p>
+  <div class="hand">I love you, <span class="nm">you</span></div>
+  <a class="wa" id="waYes" target="_blank" rel="noopener">Send me your answer on WhatsApp 💬</a>
+</section>
+
+<!-- 5b. Time -->
+<section class="screen" id="s6">
+  <div class="big-heart" style="animation:none">🌙</div>
+  <h1>That's completely okay</h1>
+  <p class="sub">Take all the time you need. I'll be right here whenever you're ready to talk. I'm really sorry, and I love you.</p>
+  <a class="wa" id="waTime" target="_blank" rel="noopener">Let me know on WhatsApp 💬</a>
+  <button class="ghost" onclick="go(4)" style="margin-top:14px">← back</button>
+</section>
+
+<script>
+  // Personalise: add #Name to the end of the link, e.g. ...#Riya
+  const name = 'Neelu';
+  document.querySelectorAll('.nm').forEach(e => e.textContent = name);
+
+  const WA = 'https://wa.me/918445680090?text=';
+  document.getElementById('waYes').href = WA + encodeURIComponent("I saw your sorry page... I forgive you 🤍 Come give me that hug.");
+  document.getElementById('waTime').href = WA + encodeURIComponent("I saw your sorry page. I need a little time, but I read it.");
+  function go(n){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+    const el = document.getElementById('s'+n);
+    el.classList.add('on');
+    window.scrollTo(0,0);
+    if(n===3){
+      el.querySelectorAll('.card').forEach((c,i)=>{c.classList.remove('show');setTimeout(()=>c.classList.add('show'),250+i*350)});
+    }
+  }
+  function openEnv(){
+    const e = document.getElementById('env');
+    e.classList.add('open');
+    setTimeout(()=>go(2),700);
+  }
+  function answer(yes){
+    if(yes){ go(5); burst(40); } else go(6);
+  }
+
+  const H = ['💗','💕','🤍','💞','🌸'];
+  const box = document.getElementById('hearts');
+  function heart(big){
+    const h = document.createElement('div');
+    h.className='fh';
+    h.textContent = H[Math.floor(Math.random()*H.length)];
+    h.style.left = Math.random()*100+'vw';
+    h.style.fontSize = (big? 22+Math.random()*22 : 14+Math.random()*14)+'px';
+    h.style.animationDuration = (big? 3+Math.random()*3 : 7+Math.random()*6)+'s';
+    box.appendChild(h);
+    setTimeout(()=>h.remove(), 14000);
+  }
+  setInterval(()=>heart(false), 900);
+  function burst(n){ for(let i=0;i<n;i++) setTimeout(()=>heart(true), i*60); }
+</script>
+</body>
+</html>
